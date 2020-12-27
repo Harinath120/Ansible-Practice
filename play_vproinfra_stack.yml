@@ -1,0 +1,87 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_files:
+    - vpro_stack_vars/cloudvars
+  tasks:
+    - name: create vpro ec2 key
+      ec2_key:
+        name: vpro-key
+        region: "{{region}}"
+      register: vpro_key_info
+
+#    - debug:
+#       msg: "{{vpro_key_info}}"
+
+    - name: save private key into file
+      copy:
+        content: "{{vpro_key_info.key.private_key}}"
+        dest: "./login_key_vprofile.pem"
+        mode: 0600
+      when: vpro_key_info.changed
+
+    - name: create security group for vprofile stack
+      ec2_group:
+        name: vpro_stack_sg
+        description: Allow port 22 from everywhere and will port with in sg
+        region: "{{region}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: "{{myip}}"
+
+          - proto: tcp
+            from_port: 8080
+            to_port: 8080
+            cidr_ip: "{{myip}}"
+
+          - proto: tcp
+            from_port: 3306
+            to_port: 3306
+            cidr_ip: "{{myip}}"
+      register: vprostacksg
+
+    - debug:
+        msg: "{{vprostacksg}}"
+
+
+
+    - name: create security group for vprofile stack
+      ec2_group:
+        name: vpro_stack_sg
+        description: Allow port 22 from everywhere and will port with in sg
+        region: "{{region}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: "{{myip}}"
+
+          - proto: tcp
+            from_port: 8080
+            to_port: 8080
+            cidr_ip: "{{myip}}"
+
+          - proto: tcp
+            from_port: 3306
+            to_port: 3306
+            cidr_ip: "{{myip}}"
+
+          - proto: all
+            group_id: "{{vprostacksg.group_id}}"
+      register: vprostacksg
+
+    - debug:
+        msg: "{{vprostacksg}}"
