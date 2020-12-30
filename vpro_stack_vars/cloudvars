@@ -1,2 +1,4 @@
 region: us-east-1
 myip: 157.44.38.103/32
+inst_t: t2.micro
+ami: ami-0739f8cdb239fe9ae
