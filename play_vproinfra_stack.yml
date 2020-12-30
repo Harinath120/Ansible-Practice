@@ -87,7 +87,7 @@
         msg: "{{vprostacksg.group_id}}"
 
 
-    - name: creating all Instances Nginx, Tomcat, RMQ, Memcashe, db
+    - name: creating all Instances, Nginx, Tomcat, RMQ, Memcashe, db
       ec2: 
         key_name: vpro-key
         region: "{{region}}"
