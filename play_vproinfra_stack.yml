@@ -114,4 +114,6 @@
         - Memcache01
         - db01
 
-    
+      register: vpro_ec2_info
+    - debug:
+        msg: "{{vpro_ec2_info}}"
