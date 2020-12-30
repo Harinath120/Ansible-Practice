@@ -84,4 +84,24 @@
       register: vprostacksg
 
     - debug:
-        msg: "{{vprostacksg}}"
+        msg: "{{vprostacksg.group_id}}"
+
+
+    - name: creating all Instances Nginx, Tomcat, RMQ, Memcashe, db
+      ec2: 
+        key_name: vpro-key
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: ami-0739f8cdb239fe9ae
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: Nginx01
+          project: vprofile
+          owner: Devops Team
+        exact_count: 1
+        count_tag: 
+          Name: Nginx01
+          project: vprofile
+          owner: Devops Team
+        group_id: "{{vprostacksg.group_id}}"
