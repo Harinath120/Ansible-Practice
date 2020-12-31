@@ -12,8 +12,8 @@
         region: "{{region}}"
       register: vpro_key_info
 
-    - debug:
-        msg: "{{vpro_key_info}}"
+#    - debug:
+#        msg: "{{vpro_key_info}}"
 
     - name: save private key into file
       copy:
@@ -85,11 +85,11 @@
             group_id: "{{vprostacksg.group_id}}"
       register: vprostacksg
 
-    - debug:
-        msg: "{{vprostacksg}}"
+#    - debug:
+#        msg: "{{vprostacksg}}"
 
-    - debug:
-        msg: "{{vprostacksg.group_id}}"
+#    - debug:
+#        msg: "{{vprostacksg.group_id}}"
 
 
     - name: creating all Instances, Nginx, Tomcat, RMQ, Memcashe, db
@@ -115,19 +115,19 @@
       register: vpro_ec2_info
 
 
-    - debug:
-        msg: "{{item.key}}"
-      loop: "{{ lookup('dict', inst_details)}}"
+#    - debug:
+#        msg: "{{item.key}}"
+#      loop: "{{ lookup('dict', inst_details)}}"
 
-    - debug:
-        msg: "{{item.values}}"
-      loop: "{{ lookup('dict', inst_details)}}"
+#    - debug:
+#        msg: "{{item.values}}"
+#      loop: "{{ lookup('dict', inst_details)}}"
 
-    - debug:
-        msg: "{{vpro_ec2_info}}"
+#    - debug:
+#        msg: "{{vpro_ec2_info}}"
 
-    - debug:
-        msg: "Public IP for the instance {{item.name}} is: {{item.IP}}"
+#    - debug:
+#        msg: "Public IP for the instance {{item.name}} is: {{item.IP}}"
     
       loop: 
        - name: Nginx01
