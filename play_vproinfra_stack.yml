@@ -95,24 +95,51 @@
         wait: yes
         wait_timeout: 300
         instance_tags:
-          Name: "{{item}}"
+          Name: "{{item.name}}"
           project: vprofile
           owner: Devops Team
         exact_count: 1
         count_tag: 
-          Name: "{{item}}"
+          Name: "{{item.name}}"
           project: vprofile
           owner: Devops Team
         group_id: "{{vprostacksg.group_id}}"
-      with_items:
-        - Nginx01
-        - Nginx02
-        - Tomcat01
-        - Tomcat02
-        - RMQ01
-        - Memcache01
-        - db01
+      loop:
+        - name: Nginx01
+          subnet: "{{sub1}}"
+        - name: Nginx02
+          subnet: "{{sub2}}"
+        - name: Tomcat01
+          subnet: "{{sub1}}"
+        - name: Tomcat02
+          subnet: "{{sub2}}"
+        - name: RMQ01
+          subnet: "{{sub1}}"
+        - name: Memcache01
+          subnet: "{{sub1}}"
+        - name: db01
+          subnet: "{{sub1}}"
 
       register: vpro_ec2_info
+
     - debug:
         msg: "{{vpro_ec2_info}}"
+
+    - debug:
+        msg: "Public IP for the instance {{item.name}} is: {{item.IP}}"
+    
+      loop: 
+       - name: Nginx01
+         IP: "{{vpro_ec2_info.results[0].tagged_instances[0].public_ip}}"
+       - name: Nginx02
+         IP: "{{vpro_ec2_info.results[1].tagged_instances[0].public_ip}}"
+       - name: Tomcat01
+         IP: "{{vpro_ec2_info.results[2].tagged_instances[0].public_ip}}"
+       - name: Tomcat02
+         IP: "{{vpro_ec2_info.results[3].tagged_instances[0].public_ip}}"
+       - name: RMQ01
+         IP: "{{vpro_ec2_info.results[4].tagged_instances[0].public_ip}}"
+       - name: Memcache01
+         IP: "{{vpro_ec2_info.results[5].tagged_instances[0].public_ip}}"
+       - name: db01
+         IP: "{{vpro_ec2_info.results[6].tagged_instances[0].public_ip}}"
