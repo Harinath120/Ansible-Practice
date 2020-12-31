@@ -12,8 +12,8 @@
         region: "{{region}}"
       register: vpro_key_info
 
-#    - debug:
-#        msg: "{{vpro_key_info}}"
+    - debug:
+        msg: "{{vpro_key_info}}"
 
     - name: save private key into file
       copy:
