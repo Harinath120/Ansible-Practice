@@ -4,6 +4,7 @@
   gather_facts: False
   vars_files:
     - vpro_stack_vars/cloudvars
+    - vpro_stack_vars/dict_vars
   tasks:
     - name: create vpro ec2 key
       ec2_key:
@@ -75,6 +76,11 @@
             to_port: 3306
             cidr_ip: "{{myip}}"
 
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            group_id: "{{ansible_sg_id}}"
+
           - proto: all
             group_id: "{{vprostacksg.group_id}}"
       register: vprostacksg
@@ -95,32 +101,27 @@
         wait: yes
         wait_timeout: 300
         instance_tags:
-          Name: "{{item.name}}"
+          Name: "{{item.value.name}}"
           project: vprofile
           owner: Devops Team
         exact_count: 1
         count_tag: 
-          Name: "{{item.name}}"
+          Name: "{{item.value.name}}"
           project: vprofile
           owner: Devops Team
         group_id: "{{vprostacksg.group_id}}"
-      loop:
-        - name: Nginx01
-          subnet: "{{sub1}}"
-        - name: Nginx02
-          subnet: "{{sub2}}"
-        - name: Tomcat01
-          subnet: "{{sub1}}"
-        - name: Tomcat02
-          subnet: "{{sub2}}"
-        - name: RMQ01
-          subnet: "{{sub1}}"
-        - name: Memcache01
-          subnet: "{{sub1}}"
-        - name: db01
-          subnet: "{{sub1}}"
-
+        vpc_subnet_id: "{{item.value.subnet}}"
+      loop: "{{ lookup('dict', inst_details)}}"
       register: vpro_ec2_info
+
+
+    - debug:
+        msg: "{{item.key}}"
+      loop: "{{ lookup('dict', inst_details)}}"
+
+    - debug:
+        msg: "{{item.values}}"
+      loop: "{{ lookup('dict', inst_details)}}"
 
     - debug:
         msg: "{{vpro_ec2_info}}"
@@ -130,16 +131,16 @@
     
       loop: 
        - name: Nginx01
-         IP: "{{vpro_ec2_info.results[0].tagged_instances[0].public_ip}}"
+         IP: "{{vpro_ec2_info.results[0].tagged_instances[0].private_ip}}"
        - name: Nginx02
-         IP: "{{vpro_ec2_info.results[1].tagged_instances[0].public_ip}}"
+         IP: "{{vpro_ec2_info.results[1].tagged_instances[0].private_ip}}"
        - name: Tomcat01
-         IP: "{{vpro_ec2_info.results[2].tagged_instances[0].public_ip}}"
+         IP: "{{vpro_ec2_info.results[2].tagged_instances[0].private_ip}}"
        - name: Tomcat02
-         IP: "{{vpro_ec2_info.results[3].tagged_instances[0].public_ip}}"
+         IP: "{{vpro_ec2_info.results[3].tagged_instances[0].private_ip}}"
        - name: RMQ01
-         IP: "{{vpro_ec2_info.results[4].tagged_instances[0].public_ip}}"
+         IP: "{{vpro_ec2_info.results[4].tagged_instances[0].private_ip}}"
        - name: Memcache01
-         IP: "{{vpro_ec2_info.results[5].tagged_instances[0].public_ip}}"
+         IP: "{{vpro_ec2_info.results[5].tagged_instances[0].private_ip}}"
        - name: db01
-         IP: "{{vpro_ec2_info.results[6].tagged_instances[0].public_ip}}"
+         IP: "{{vpro_ec2_info.results[6].tagged_instances[0].private_ip}}"

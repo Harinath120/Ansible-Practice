@@ -4,3 +4,4 @@ inst_t: t2.micro
 ami: ami-0739f8cdb239fe9ae
 sub1: subnet-44440d09
 sub2: subnet-b0c67cef
+ansible_sg_id: sg-0537f47c40b0e76e7
