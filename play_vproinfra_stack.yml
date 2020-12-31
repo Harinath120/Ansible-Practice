@@ -11,8 +11,8 @@
         region: "{{region}}"
       register: vpro_key_info
 
-#    - debug:
-#       msg: "{{vpro_key_info}}"
+    - debug:
+        msg: "{{vpro_key_info}}"
 
     - name: save private key into file
       copy:
@@ -48,10 +48,6 @@
             cidr_ip: "{{myip}}"
       register: vprostacksg
 
-    - debug:
-        msg: "{{vprostacksg}}"
-
-
 
     - name: create security group for vprofile stack
       ec2_group:
@@ -82,6 +78,9 @@
           - proto: all
             group_id: "{{vprostacksg.group_id}}"
       register: vprostacksg
+
+    - debug:
+        msg: "{{vprostacksg}}"
 
     - debug:
         msg: "{{vprostacksg.group_id}}"
