@@ -123,11 +123,11 @@
 #        msg: "{{item.values}}"
 #      loop: "{{ lookup('dict', inst_details)}}"
 
-    - debug:
-        msg: "{{vpro_ec2_info}}"
-
 #    - debug:
-#        msg: "Public IP for the instance {{item.name}} is: {{item.IP}}"
+#        msg: "{{vpro_ec2_info}}"
+
+    - debug:
+        msg: "Public IP for the instance {{item.name}} is: {{item.IP}}"
     
       loop: 
        - name: Nginx01
