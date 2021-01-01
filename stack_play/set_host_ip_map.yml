@@ -1,0 +1,7 @@
+- name: set host ip to mapping in /etc/hosts file of the all instances in the stack
+  hosts: all
+  tasks:
+    - name: Update hosts file
+      blockinfile:
+        path: /etc/hosts
+        block:
