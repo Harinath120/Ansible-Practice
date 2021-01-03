@@ -4,4 +4,11 @@
     - name: Update hosts file
       blockinfile:
         path: /etc/hosts
-        block:
+        block: |
+          172.31.16.87 web01
+          172.31.17.198 web02
+          172.31.43.64 app01
+          172.31.39.150 app02
+          172.31.30.172 rmq01
+          172.31.19.251 mc01
+          172.31.31.57 db01
