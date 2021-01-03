@@ -1,6 +1,6 @@
 web01 ansible_host=172.31.16.87
 web02 ansible_host=172.31.17.198
-app01 ansible_host=172.31.43.64"
+app01 ansible_host=172.31.43.64
 app02 ansible_host=172.31.39.150
 rmq01 ansible_host=172.31.30.172
 mc01 ansible_host=172.31.19.251
