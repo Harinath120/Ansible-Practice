@@ -11,9 +11,13 @@
         - mysql-server
         - mysql-client
         - python-mysqldb
-        - mysql-python
-        - pymysql
         - libmysqlclient-dev
+        - python-pymysql
+
+#    - name: make sure pysql is present
+#     pip:
+#        name: pysql
+#        state: present
 
     - name: start and enable mysql service
       service: 
