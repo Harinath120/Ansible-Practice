@@ -5,6 +5,7 @@ app02 ansible_host=172.31.39.150
 rmq01 ansible_host=172.31.30.172
 mc01 ansible_host=172.31.19.251
 db01 ansible_host=172.31.31.57
+cntl ansible_host=127.0.0.1 ansible_connection=local
 
 [websrvgrp]
 web01
@@ -22,6 +23,9 @@ mc01
 
 [dbsrvgrp]
 db01
+
+[control]
+cntl
 
 [stack_inst:children]
 websrvgrp

@@ -1,0 +1,49 @@
+---
+- name: setup Mysql with accounts db and remote login
+  hosts: dbsrvgrp
+  tasks:
+    - name: Installing Mysql service and dependencies
+      package:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      loop:
+        - mysql-server
+        - mysql-client
+        - python-mysqldb
+        - libmysqlclient-dev
+
+    - name: start and enable mysql service
+      service: 
+         name: mysql
+         state: started
+         enabled: yes
+
+    - name: creating mysql server
+      mysql_user:
+        name: "{{dbuser}}"
+        password: "{{dbpass}}"
+        priv: '*.*:ALL'
+        host: '%'
+        state: present
+
+    - name: creating accounts DB
+      mysql_db:
+        name: "{{dbname}}"
+        state: present
+
+    - name: Enable remote login to mysql svc
+      lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.conf
+        regexp: '^bind-address'
+        line: 'bind-address = 0.0.0.0'
+        backup: yes
+      notify:
+      - restart mysql 
+
+  handlers:
+   - name: Restart mysql
+     service:
+       name: mysql
+       state: restarted 
+    
