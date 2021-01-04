@@ -31,9 +31,9 @@
 #        msg: "{{mvn_info}}"
 
     - name: copy artifacts to files directory
-      command: "cp Vprofile-repo/target/vprofile-v3.war files/"
+      command: "cp /home/ec2-user/ansible-practice/stack_play/vprofile-repo/target/vprofile-v2.war files/"
 
     - name: copy SQL file to files directory
-      command: "cp Vprofile-repo/src/main/resources/db_backup.sql files/"
+      command: "cp /home/ec2-user/ansible-practice/stack_play/vprofile-repo/src/main/resources/db_backup.sql files/"
 
 
