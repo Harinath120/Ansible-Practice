@@ -17,7 +17,7 @@
       git:
         repo: 'https://github.com/Harinath120/vprofile-project.git'
         dest: ./vprofile-repo
-        version: vp-rm
+        version: vp-rem
       register: git_status
 
 
