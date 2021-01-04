@@ -11,6 +11,8 @@
         - mysql-server
         - mysql-client
         - python-mysqldb
+        - mysql-python
+        - pymysql
         - libmysqlclient-dev
 
     - name: start and enable mysql service
