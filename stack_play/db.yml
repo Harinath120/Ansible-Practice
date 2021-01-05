@@ -54,4 +54,19 @@
         login_unix_socket: /var/run/mysqld/mysqld.sock
         state: present
 
+    - name: Enable remote login to mysql svc 
+      lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^bind-address'
+        line: 'bind-address = 0.0.0.0'
+      notify:
+      - Restart mysql
+
+  handlers:
+   - name: Restart mysql
+     service:
+       name: mysql
+       state: restarted
+       enabled: yes
+
     
