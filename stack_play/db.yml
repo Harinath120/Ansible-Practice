@@ -14,6 +14,10 @@
         - mysql-client
         - python-mysqldb
         - libmysqlclient-dev
+        - python-pymysql
+        - python3-pymysql
+        - python-apt
+        - python3-apt
         
 
     - name: start and enable mysql service
