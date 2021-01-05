@@ -19,5 +19,18 @@
          name: mysql
          state: started
          enabled: yes
+    
+    - name: creating mysql user 
+      mysql_user:
+        name: "{{dbuser}}"
+        password: "{{dbpass}}"
+        priv: '*.*:ALL'
+        host: '%'
+        state: present
 
+    - name: creating accounts DB
+      mysql_db:
+        name: "{{dbname}}"
+        state: present
+        
     
