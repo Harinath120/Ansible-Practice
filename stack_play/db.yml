@@ -3,7 +3,6 @@
   hosts: dbsrvgrp
   tasks:
     - name: Installing Mysql service and dependencies
-      apt:
       package:
         name: "{{item}}"
         state: present
