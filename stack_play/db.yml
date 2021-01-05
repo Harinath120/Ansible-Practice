@@ -25,7 +25,19 @@
          name: mysql
          state: started
          enabled: yes
-    
+         
+    - name: Removes anonymous user account for localhost
+      mysql_user:
+        name: ''
+        host: localhost
+        state: absent
+
+    - name: Removes all anonymous user accounts
+      mysql_user:
+         name: ''
+         host_all: yes
+         state: absent
+
     - name: creating mysql user 
       mysql_user:
         name: "{{dbuser}}"
