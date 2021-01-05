@@ -22,15 +22,15 @@
     
     - name: creating mysql user 
       mysql_user:
-        name: dbuser
-        password: dbpass
+        name: "{{dbuser}}"
+        password: "{{dbpass}}"
         priv: '*.*:ALL'
         host: '%'
         state: present
 
     - name: creating accounts DB
       mysql_db:
-        name: dbname
+        name: "{{dbname}}"
         state: present
 
     
