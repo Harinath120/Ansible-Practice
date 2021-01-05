@@ -51,6 +51,7 @@
     - name: creating accounts DB
       mysql_db:
         name: "{{dbname}}"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
         state: present
 
     
