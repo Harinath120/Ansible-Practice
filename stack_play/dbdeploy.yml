@@ -12,6 +12,7 @@
         name: accounts
         login_user: "{{dbuser}}"
         login_password: "{{dbpass}}"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
         state: import
         target: /tmp/db_backup.sql
       notify:
