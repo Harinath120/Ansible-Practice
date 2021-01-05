@@ -9,6 +9,7 @@
         update_cache: yes
       loop:
         - mysql-server
+        - MySQL-python
         - mysql-client
         - python-mysqldb
         - libmysqlclient-dev
@@ -32,5 +33,5 @@
       mysql_db:
         name: "{{dbname}}"
         state: present
-        
+
     
