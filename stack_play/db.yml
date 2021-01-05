@@ -3,6 +3,7 @@
   hosts: dbsrvgrp
   vars_files:
     - group_vars/all
+  become: yes
   tasks:
     - name: Installing Mysql service and dependencies
       package:
@@ -42,6 +43,7 @@
       mysql_user:
         name: "{{dbuser}}"
         password: "{{dbpass}}"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
         priv: '*.*:ALL'
         host: '%'
         state: present
