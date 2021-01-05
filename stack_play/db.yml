@@ -3,6 +3,7 @@
   hosts: dbsrvgrp
   tasks:
     - name: Installing Mysql service and dependencies
+      apt:
       package:
         name: "{{item}}"
         state: present
@@ -12,7 +13,7 @@
         - mysql-client
         - python-mysqldb
         - libmysqlclient-dev
-        - python-pymysql
+        
 
 #    - name: make sure pysql is present
 #     pip:
