@@ -1,0 +1,15 @@
+---
+- name: Install Memcache, Start & enable Service 
+  hosts: mcsrvgrp
+  tasks:
+    - name: Install Memcache
+      apt:
+        name: memcached
+        state: present
+        update_cache: yes
+
+    - name: Start and enable Memcache
+      service: 
+        name: memcached
+        state: started
+        enabled: yes

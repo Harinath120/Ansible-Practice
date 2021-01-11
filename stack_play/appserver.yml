@@ -1,0 +1,65 @@
+--- 
+- name: Setup Tomcat8 & Deploy artifact 
+  hosts: appsrvgrp
+  vars:
+    timestamp: "{{ansible_date_time.date}}_{{ansible_date_time.hour}}_{{ansible_date_time.minute}}"
+  tasks:
+    - name: Install Tomcat 8 & Dependencies 
+      package:
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+      with_items:
+        - tomcat8 
+        - tomcat8-admin 
+        - tomcat8-docs 
+        - tomcat8-common
+
+    - name: Start & Enable tomcat service 
+      service: 
+        name: tomcat8 
+        state: present 
+        enabled: yes
+
+    - stat:
+        path: /var/lib/tomcat8/webapps/ROOT 
+      register: artifact_stat 
+
+    - name: Archive ROOT dir with timestamp
+      archive: 
+        path: /var/lib/tomcat8/webapps/ROOT
+        dest: "/opt/ROOT_{{timestamp}}.tgz"
+      when: artifact_stat.stat.exists
+      register: archive_info
+
+    - name: Delete current artifact 
+      file: 
+        path: /var/lib/tomcat8/webapps/ROOT
+        state: absent 
+      when: archive_info.changed 
+
+    - name: Deploy vprofile artifact 
+      copy: 
+        src: files/vprofile-v2.war 
+        dest: /var/lib/tomcat8/webapps/ROOT.war 
+      register: deploy_info
+
+    - name: Restart tomcat8 service 
+      service: 
+        name: tomcat8 
+        state: restarted 
+      when: deploy_info.changed 
+
+    - name: Deploy web configuration file 
+      template: 
+        src: templates/application.j2
+        dest: /var/lib/tomcat8/webapps/ROOT/WEB-INF/classes/application.properties 
+        force: yes
+      notify: 
+       - Restart Tomcat 
+
+  handlers: 
+   - name: Restart Tomcat 
+     service: 
+      name: tomcat8 
+      state: restarted 
