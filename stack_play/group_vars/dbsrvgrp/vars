@@ -1,3 +1,0 @@
-dbuser: "{{encr_dbuser}}"
-dbpass: "{{encr_dbpass}}"
-dbname: accounts

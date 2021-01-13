@@ -2,7 +2,7 @@
 - name: setup Mysql with accounts db and remote login
   hosts: dbsrvgrp
   vars_files:
-    - group_vars/vars
+    - group_vars/all
   become: yes
   tasks:
     - name: Installing Mysql service and dependencies

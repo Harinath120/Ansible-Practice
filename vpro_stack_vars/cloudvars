@@ -1,5 +1,5 @@
 region: us-east-1
-myip: 157.48.152.45/32
+myip: 157.48.163.138/32
 inst_t: t2.micro
 ami: ami-0739f8cdb239fe9ae
 sub1: subnet-44440d09
